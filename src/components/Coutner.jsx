@@ -8,15 +8,15 @@ const Coutner = () => {
     <div>
       <p style={{ color: "white", fontWeight: "bold" }}>{count}</p>
 
-      <button onClick={increment}>+1</button>
-      <br />
+      <button style={{ marginRight: "10px" }} onClick={increment}>
+        +1
+      </button>
 
-      <button style={{ marginTop: "10px" }} onClick={reset}>
+      <button style={{ marginRight: "10px" }} onClick={reset}>
         reset
       </button>
-      <br />
 
-      <button style={{ marginTop: "10px" }} onClick={() => setNumber(3)}>
+      <button style={{ marginRight: "10px" }} onClick={() => setNumber(3)}>
         to 3
       </button>
     </div>
