@@ -4,6 +4,10 @@ import { useCounterStore } from "../store/useCounterStore";
 const Coutner = () => {
   const { count, increment, reset, setNumber } = useCounterStore();
 
+  const clear = () => {
+    useCounterStore.persist.clearStorage();
+  };
+
   return (
     <div>
       <p style={{ color: "white", fontWeight: "bold" }}>{count}</p>
@@ -18,6 +22,10 @@ const Coutner = () => {
 
       <button style={{ marginRight: "10px" }} onClick={() => setNumber(3)}>
         to 3
+      </button>
+
+      <button style={{ marginRight: "10px" }} onClick={clear}>
+        clear
       </button>
     </div>
   );

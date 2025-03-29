@@ -1,35 +1,44 @@
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
-export const useTodoStore = create((set) => ({
-  todos: [],
-  addTodo: (todoText) =>
-    set((state) => ({
-      todos: [
-        ...state.todos,
-        {
-          text: todoText,
-          id: getId(),
-          isCompleted: false,
-        },
-      ],
-    })),
-  deleteTodo: (todoId) =>
-    set((state) => ({
-      todos: state.todos.filter((todo) => todo.id !== todoId),
-    })),
-  completeTodo: (todoId) =>
-    set((state) => ({
-      todos: state.todos.map((todo) => {
-        if (todo.id === todoId)
-          return {
-            ...todo,
-            isCompleted: true,
-          };
+export const useTodoStore = create(
+  persist(
+    (set) => ({
+      todos: [],
+      addTodo: (todoText) =>
+        set((state) => ({
+          todos: [
+            ...state.todos,
+            {
+              text: todoText,
+              id: getId(),
+              isCompleted: false,
+            },
+          ],
+        })),
+      deleteTodo: (todoId) =>
+        set((state) => ({
+          todos: state.todos.filter((todo) => todo.id !== todoId),
+        })),
+      completeTodo: (todoId) =>
+        set((state) => ({
+          todos: state.todos.map((todo) => {
+            if (todo.id === todoId)
+              return {
+                ...todo,
+                isCompleted: true,
+              };
 
-        return todo;
-      }),
-    })),
-}));
+            return todo;
+          }),
+        })),
+    }),
+    {
+      name: "todo",
+      storage: createJSONStorage(() => sessionStorage),
+    }
+  )
+);
 
 let id = 0;
 function getId() {
